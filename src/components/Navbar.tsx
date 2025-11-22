@@ -19,7 +19,6 @@ const Navbar = () => {
     { name: "Services", href: "#services" },
     { name: "Portfolio", href: "#portfolio" },
     { name: "About Us", href: "#about" },
-    { name: "Case Studies", href: "#case-studies" },
   ];
 
   return (
