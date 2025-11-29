@@ -8,6 +8,7 @@ import AboutUs from "@/components/AboutUs";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
+import Tools from "@/components/Tools";
 
 const Index = () => {
   return (
@@ -17,6 +18,7 @@ const Index = () => {
       <Services />
       <Portfolio />
       <ProblemSolution />
+      <Tools />
       <DeliveryProcess />
       <AboutUs />
       <CTA />

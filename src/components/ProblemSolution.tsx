@@ -1,5 +1,4 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Description } from "@radix-ui/react-alert-dialog";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
 
 const ProblemSolution = () => {
@@ -25,8 +24,8 @@ const ProblemSolution = () => {
       description: "Difficulty measuring performance consistently",
     },
     {
-      title: "Zero Predictive Ability",
-      description: "Unable to forecast trends or anticipate challenges",
+      title: "Lack of Actionable Insights",
+      description: "Unable to find insights to drive actions",
     },
   ];
 
@@ -34,28 +33,42 @@ const ProblemSolution = () => {
     {
       title: "Unified Data Platform",
       description:
-        "Consolidate all data into a single, accessible source for holistic view",
+        "Consolidate all data into a single, accessible source for a holistic view.",
     },
     {
       title: "Automated Insights",
       description:
-        "Streamline reporting to deliver timely, accurate information with zero effort",
+        "Streamline reporting to deliver timely, accurate information with zero manual effort.",
     },
     {
       title: "Real-Time Dashboards",
       description:
-        "Instant access to KPIs and trends enabling proactive responses",
+        "Instant access to KPIs and trends enabling proactive decision-making.",
     },
-
+    {
+      title: "Workflow Automation & Alerts",
+      description:
+        "Automate repetitive tasks and create smart triggers that notify teams when KPIs spike, drop, or cross thresholds.",
+    },
+    
+    {
+      title: "Data Quality & Governance",
+      description:
+        "Ensure clean, accurate, standardized data across systems to improve trust and consistency.",
+    },
     {
       title: "Actionable Intelligence Layer",
-      Description: "Beyond dashboards — we deliver insights, alerts & performance narratives your team can act on.",
+      description:
+        "Beyond dashboards — we deliver insights, alerts, and narratives your team can execute on.",
     },
+    
+    
   ];
 
   return (
     <section id="about" className="py-24 bg-secondary/10">
       <div className="container mx-auto px-6">
+        
         {/* Problem Section */}
         <div className="mb-20">
           <div className="text-center mb-12 space-y-4">
@@ -64,8 +77,8 @@ const ProblemSolution = () => {
               <span className="text-destructive">Problems</span> We Solve
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Most businesses struggle with scattered, slow, and unreliable data
-              — making accurate, timely decision-making nearly impossible
+              Most businesses struggle with scattered, slow, and unreliable data —
+              making accurate and timely decision-making nearly impossible.
             </p>
           </div>
 
@@ -96,8 +109,8 @@ const ProblemSolution = () => {
               We Deliver
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              DataPearls centralizes your data, automates your reporting, and
-              gives you real-time visibility into every aspect of your business
+              DataPearls centralizes your data, automates reporting, and gives you
+              real-time visibility into every aspect of your business.
             </p>
           </div>
 
@@ -120,6 +133,7 @@ const ProblemSolution = () => {
             ))}
           </div>
         </div>
+
       </div>
     </section>
   );

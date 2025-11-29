@@ -39,8 +39,7 @@ const Hero = () => {
           </h1>
 
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-            Unlock real-time decision-making through powerful Business
-            Intelligence, Advanced Analytics & Intelligent Automation
+            Unlock real-time decision-making with powerful Business Intelligence, Data Analytics, and Intelligent Automation — helping you accelerate growth with clarity and confidence.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6">

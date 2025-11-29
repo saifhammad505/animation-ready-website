@@ -34,7 +34,7 @@ const DeliveryProcess = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
           {steps.map((step, index) => (
             <div
               key={index}
@@ -46,7 +46,7 @@ const DeliveryProcess = () => {
                   <div className="w-16 h-16 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
                     <step.icon className="w-8 h-8 text-primary" />
                   </div>
-                  <div className="text-6xl font-bold text-primary/10 group-hover:text-primary/20 transition-colors">
+                  <div className="text-6xl font-bold text-primary/35 group-hover:text-primary/30 transition-colors">
                     {step.number}
                   </div>
                 </div>
