@@ -3,7 +3,7 @@ import aboutImg from "@/assets/Digital presentation-amico (1).svg"; // replace w
 
 const AboutUs = () => {
   return (
-    <section id="about" className="py-24 bg-accent/20">
+    <section id="about" className="py-24 bg-slate-950">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
 
@@ -29,28 +29,28 @@ const AboutUs = () => {
             transition={{ duration: 0.6 }}
             className="space-y-6"
           >
-            <h2 className="text-4xl font-bold">
+            <h2 className="text-4xl text-white font-bold">
               About{" "}
               <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
                 DataPearls
               </span>
             </h2>
 
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-lg text-white leading-relaxed">
               DataPearls is your strategic BI and analytics partner — delivering
               real-time visibility, automated reporting, and enterprise-grade
               insights that empower leaders to make confident, data-driven
               decisions.
             </p>
 
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-lg text-white leading-relaxed">
               We specialize in modern data platforms, dashboards, predictive models,
               and workflow automation built on top of SQL, Python, Power BI, Azure,
               and cloud data warehouses. Our solutions unify scattered data, reduce
               manual reporting, and unlock operational efficiency at scale.
             </p>
 
-            <ul className="space-y-3 text-muted-foreground">
+            <ul className="space-y-3 text-white ">
               <li>✔ Enterprise BI dashboards & KPI systems</li>
               <li>✔ Automated data pipelines & reporting workflows</li>
               <li>✔ Predictive analytics & ML-driven insights</li>
