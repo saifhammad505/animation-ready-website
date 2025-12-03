@@ -1,139 +1,211 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { AlertCircle, CheckCircle2 } from "lucide-react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { ArrowDown, AlertTriangle, CheckCircle2 } from "lucide-react";
 
-const ProblemSolution = () => {
-  const problems = [
-    {
+const items = [
+  {
+    problem: {
       title: "Fragmented Data",
-      description: "Information silos prevent unified business insights",
+      description:
+        "Critical data lives across multiple systems, making unified reporting slow and inconsistent.",
     },
-    {
-      title: "Manual Reporting",
-      description: "Time-consuming, error-prone Excel processes",
-    },
-    {
-      title: "Delayed KPIs",
-      description: "Lack of real-time insights causes slow reactions",
-    },
-    {
-      title: "Inefficient Workflows",
-      description: "Bottlenecks and missed opportunities",
-    },
-    {
-      title: "No Standardization",
-      description: "Difficulty measuring performance consistently",
-    },
-    {
-      title: "Lack of Actionable Insights",
-      description: "Unable to find insights to drive actions",
-    },
-  ];
-
-  const solutions = [
-    {
+    solution: {
       title: "Unified Data Platform",
       description:
-        "Consolidate all data into a single, accessible source for a holistic view.",
+        "A centralized, integrated data environment delivering a single source of truth for the entire organisation.",
     },
-    {
+  },
+  {
+    problem: {
+      title: "Manual Reporting",
+      description:
+        "Teams waste hours maintaining spreadsheets, increasing errors and delaying insights.",
+    },
+    solution: {
       title: "Automated Insights",
       description:
-        "Streamline reporting to deliver timely, accurate information with zero manual effort.",
+        "Automated workflows deliver accurate reports instantly, eliminating manual effort entirely.",
     },
-    {
+  },
+  {
+    problem: {
+      title: "Delayed KPIs",
+      description:
+        "Leadership receives outdated KPIs, resulting in reactive instead of proactive decisions.",
+    },
+    solution: {
       title: "Real-Time Dashboards",
       description:
-        "Instant access to KPIs and trends enabling proactive decision-making.",
+        "Live KPI monitoring ensures decisions are timely, informed, and aligned with business performance.",
     },
-    {
-      title: "Workflow Automation & Alerts",
+  },
+  {
+    problem: {
+      title: "Inefficient Workflows",
       description:
-        "Automate repetitive tasks and create smart triggers that notify teams when KPIs spike, drop, or cross thresholds.",
+        "Bottlenecks are hard to detect, leading to missed opportunities and slow execution.",
     },
-    
-    {
+    solution: {
+      title: "Insight-Driven Automation",
+      description:
+        "Automated triggers notify teams when KPIs move unexpectedly, unlocking fast corrective action.",
+    },
+  },
+  {
+    problem: {
+      title: "No Standardization",
+      description:
+        "Different teams measure performance differently, creating reporting conflicts and misalignment.",
+    },
+    solution: {
       title: "Data Quality & Governance",
       description:
-        "Ensure clean, accurate, standardized data across systems to improve trust and consistency.",
+        "Standardized KPI definitions and governed data ensure consistent, trusted reporting across all teams.",
     },
-    {
-      title: "Actionable Intelligence Layer",
+  },
+  {
+    problem: {
+      title: "Surface-Level Dashboards",
       description:
-        "Beyond dashboards — we deliver insights, alerts, and narratives your team can execute on.",
+        "Dashboards exist, but insights don't translate into meaningful actions.",
     },
-    
-    
-  ];
+    solution: {
+      title: "Actionable Intelligence",
+      description:
+        "Guided insights and automated recommendations help teams understand exactly what to do next.",
+    },
+  },
+];
+
+const ProblemSolution = () => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section id="about" className="py-24 bg-secondary/10">
-      <div className="container mx-auto px-6">
-        
-        {/* Problem Section */}
-        <div className="mb-20">
-          <div className="text-center mb-12 space-y-4">
-            <h2 className="text-4xl md:text-5xl font-bold">
-              The{" "}
-              <span className="text-destructive">Problems</span> We Solve
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Most businesses struggle with scattered, slow, and unreliable data —
-              making accurate and timely decision-making nearly impossible.
-            </p>
-          </div>
+    <section id="about" className="relative py-24 overflow-hidden bg-slate-950">
+      {/* Background effects */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(56,189,248,0.1),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(168,85,247,0.1),transparent_50%)]" />
+      
+      {/* Grid pattern */}
+      <div 
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                           linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+          backgroundSize: '60px 60px'
+        }}
+      />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {problems.map((problem, index) => (
-              <Card
-                key={index}
-                className="border-destructive/20 hover:border-destructive/40 transition-colors duration-300"
-              >
-                <CardContent className="p-6 space-y-3">
-                  <AlertCircle className="w-8 h-8 text-destructive" />
-                  <h3 className="text-xl font-bold">{problem.title}</h3>
-                  <p className="text-muted-foreground">{problem.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+      <div className="container relative mx-auto px-6">
+        {/* Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-20"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/50 border border-slate-700/50 mb-6">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+            <span className="text-sm text-slate-300 tracking-wide">Our Approach</span>
           </div>
-        </div>
-
-        {/* Solution Section */}
-        <div>
-          <div className="text-center mb-12 space-y-4">
-            <h2 className="text-4xl md:text-5xl font-bold">
-              The{" "}
-              <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+          
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            Transforming{" "}
+            <span className="relative">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-400">
+                Problems
+              </span>
+              <span className="absolute -inset-1 bg-red-500/20 blur-xl -z-10" />
+            </span>{" "}
+            Into{" "}
+            <span className="relative">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">
                 Solutions
-              </span>{" "}
-              We Deliver
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              DataPearls centralizes your data, automates reporting, and gives you
-              real-time visibility into every aspect of your business.
-            </p>
-          </div>
+              </span>
+              <span className="absolute -inset-1 bg-cyan-500/20 blur-xl -z-10" />
+            </span>
+          </h2>
+          
+          <p className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto">
+            We decode your challenges and turn them into scalable, data-driven outcomes.
+          </p>
+        </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {solutions.map((solution, index) => (
-              <Card
-                key={index}
-                className="border-primary/30 bg-gradient-to-br from-primary/5 to-transparent hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
-              >
-                <CardContent className="p-8 space-y-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
-                    <CheckCircle2 className="w-6 h-6 text-primary" />
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+          {items.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              className="group relative"
+            >
+              {/* Glow effect on hover */}
+              <div 
+                className={`absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-cyan-500/50 to-violet-500/50 opacity-0 blur-lg transition-opacity duration-500 ${
+                  hoveredIndex === index ? 'opacity-100' : ''
+                }`}
+              />
+              
+              <div className="relative h-full p-6 rounded-2xl bg-slate-900/80 border border-slate-700/50 backdrop-blur-xl overflow-hidden transition-all duration-300 group-hover:border-slate-600/50">
+                {/* Subtle gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-800/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Problem Section */}
+                <div className="relative space-y-3 mb-5">
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-red-500/20 to-orange-500/20 border border-red-500/30">
+                      <AlertTriangle className="w-5 h-5 text-red-400" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-400">
+                      {item.problem.title}
+                    </h3>
                   </div>
-                  <h3 className="text-2xl font-bold">{solution.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {solution.description}
+                  <p className="text-slate-400 text-sm leading-relaxed pl-[52px]">
+                    {item.problem.description}
                   </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
+                </div>
 
+                {/* Animated Connector */}
+                <div className="relative flex justify-center py-3">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-b from-red-500 to-cyan-500 rounded-full blur-md opacity-50" />
+                    <motion.div
+                      animate={{ y: [0, 4, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                      className="relative w-10 h-10 rounded-full bg-slate-800 border border-slate-600 flex items-center justify-center"
+                    >
+                      <ArrowDown className="w-5 h-5 text-cyan-400" />
+                    </motion.div>
+                  </div>
+                </div>
+
+                {/* Solution Section */}
+                <div className="relative space-y-3 mt-5">
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-emerald-500/20 border border-cyan-500/30">
+                      <CheckCircle2 className="w-5 h-5 text-cyan-400" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">
+                      {item.solution.title}
+                    </h3>
+                  </div>
+                  <p className="text-slate-400 text-sm leading-relaxed pl-[52px]">
+                    {item.solution.description}
+                  </p>
+                </div>
+
+                {/* Bottom accent line */}
+                <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

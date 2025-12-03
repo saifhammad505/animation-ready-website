@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -8,136 +8,224 @@ import {
   Brain,
   LineChart,
   Workflow,
+  ArrowUpRight,
 } from "lucide-react";
 
+const services = [
+  {
+    icon: BarChart3,
+    title: "BI-as-a-Service",
+    description:
+      "Your dedicated BI department, owning the full BI lifecycle so your team can stay focused on execution and growth.",
+    link: "/services/biaas",
+    gradient: "from-cyan-500 to-blue-500",
+    glow: "cyan",
+  },
+  {
+    icon: LineChart,
+    title: "Business Analytics",
+    description:
+      "Turn raw data into actionable insights. Sales analysis, customer segmentation, financial forecasting, and performance optimization.",
+    link: "/services/data-analytics",
+    gradient: "from-violet-500 to-purple-500",
+    glow: "violet",
+  },
+  {
+    icon: Database,
+    title: "BI Dashboards",
+    description:
+      "Custom BI dashboards with real-time visibility. Executive-level reporting, operational KPIs, and actionable insights.",
+    link: "/services/bi-dashboards",
+    gradient: "from-emerald-500 to-teal-500",
+    glow: "emerald",
+  },
+  {
+    icon: Zap,
+    title: "Data Engineering",
+    description:
+      "Build modern, automated data architectures. SQL warehouses, ETL pipelines, API integrations and more.",
+    link: "/services/data-engineering",
+    gradient: "from-amber-500 to-orange-500",
+    glow: "amber",
+  },
+  {
+    icon: Workflow,
+    title: "Workflow Automation",
+    description:
+      "Automate reporting and approval workflows. Python, Power Automate, and automated report distribution.",
+    link: "/services/workflow-automation",
+    gradient: "from-rose-500 to-pink-500",
+    glow: "rose",
+  },
+  {
+    icon: Brain,
+    title: "Predictive Analytics",
+    description:
+      "Move from reactive to proactive with ML models. Churn prediction, sales forecasting, fraud detection, and risk analysis.",
+    link: "/services/predictive-analytics",
+    gradient: "from-indigo-500 to-blue-500",
+    glow: "indigo",
+  },
+];
+
+const glowColors: Record<string, string> = {
+  cyan: "rgba(6, 182, 212, 0.4)",
+  violet: "rgba(139, 92, 246, 0.4)",
+  emerald: "rgba(16, 185, 129, 0.4)",
+  amber: "rgba(245, 158, 11, 0.4)",
+  rose: "rgba(244, 63, 94, 0.4)",
+  indigo: "rgba(99, 102, 241, 0.4)",
+};
+
 const Services = () => {
-  const services = [
-    {
-      icon: BarChart3,
-      title: "BI-as-a-Service",
-      description:
-        "Your dedicated BI department, owning the full BI lifecycle so your team can stay focused on execution and growth.",
-      gradient: "from-primary/20 to-primary/5",
-      link: "/services/biaas",
-    },
-    {
-      icon: LineChart,
-      title: "Data Analytics",
-      description:
-        "Turn raw data into actionable insights. Sales analysis, customer segmentation, financial forecasting, and performance optimization.",
-      gradient: "from-primary/20 to-primary/5",
-      link: "/services/data-analytics",
-    },
-    {
-      icon: Database,
-      title: "BI Dashboards",
-      description:
-        "Custom BI dashboards with real-time visibility. Executive-level reporting, operational KPIs, and actionable insights.",
-      gradient: "from-primary/20 to-primary/5",
-      link: "/services/bi-dashboards",
-    },
-    {
-      icon: Zap,
-      title: "Data Engineering",
-      description:
-        "Build modern, automated data architectures. SQL warehouses (cloud + on-prem), ETL pipelines, API integrations and more.",
-      gradient: "from-primary/20 to-primary/5",
-      link: "/services/data-engineering",
-    },
-    {
-      icon: Workflow,
-      title: "Workflow Automation",
-      description:
-        "Automate reporting and approval workflows. Python, Power Automate, and automated report distribution.",
-      gradient: "from-primary/20 to-primary/5",
-      link: "/services/workflow-automation",
-    },
-    {
-      icon: Brain,
-      title: "Predictive Analytics",
-      description:
-        "Move from reactive to proactive with ML models. Employee churn prediction, sales forecasting, fraud detection, and risk analysis.",
-      gradient: "from-primary/20 to-primary/5",
-      link: "/services/predictive-analytics",
-    },
-  ];
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section id="services" className="py-24 bg-accent/30">
-      <div className="container mx-auto px-6">
+    <section id="services" className="relative py-24 overflow-hidden bg-slate-950">
+      {/* Background effects */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(56,189,248,0.08),transparent_60%)]" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
+      
+      {/* Grid pattern */}
+      <div 
+        className="absolute inset-0 opacity-[0.02]"
+        style={{
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                           linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+          backgroundSize: '50px 50px'
+        }}
+      />
+
+      <div className="container relative mx-auto px-6">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16 space-y-4"
+          className="text-center mb-20"
         >
-          <h2 className="text-4xl md:text-5xl font-bold">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/50 border border-slate-700/50 mb-6">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+            <span className="text-sm text-slate-300 tracking-wide">What We Offer</span>
+          </div>
+          
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
             Our{" "}
-            <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-              Core Services
+            <span className="relative">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-violet-400 to-cyan-400">
+                Core Services
+              </span>
+              <span className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-violet-500/20 blur-xl -z-10" />
             </span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          
+          <p className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto">
             Comprehensive suite of services to transform your data landscape and
             empower intelligent business decisions
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-  {services.map((service, index) => {
-    const Icon = service.icon;
-    return (
-      <Link key={index} to={service.link}>
-        <motion.div
-          initial={{ opacity: 0, y: 40, scale: 0.95 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: index * 0.08, duration: 0.5 }}
-          whileHover={{ y: -8 }}
-        >
-          <Card
-            className="
-              relative 
-              group 
-              cursor-pointer 
-              h-full 
-              flex flex-col 
-              backdrop-blur 
-              bg-white/60 dark:bg-black/20 
-              border border-border/40 
-              hover:border-primary/40 
-              hover:shadow-xl hover:shadow-primary/10 
-              transition-all duration-300 
-              rounded-2xl
-            "
-          >
-            <div className="absolute top-0 left-0 w-full h-1 bg-primary/30 rounded-t-2xl"></div>
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service, index) => {
+            const Icon = service.icon;
+            const isHovered = hoveredIndex === index;
+            
+            return (
+              <Link key={index} to={service.link}>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1, duration: 0.5 }}
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                  className="group relative h-full"
+                >
+                  {/* Glow effect */}
+                  <div 
+                    className="absolute -inset-0.5 rounded-2xl blur-xl transition-opacity duration-500"
+                    style={{
+                      background: `radial-gradient(circle, ${glowColors[service.glow]}, transparent 70%)`,
+                      opacity: isHovered ? 1 : 0,
+                    }}
+                  />
+                  
+                  <div className="relative h-full p-6 rounded-2xl bg-slate-900/80 border border-slate-700/50 backdrop-blur-xl overflow-hidden transition-all duration-300 group-hover:border-slate-600/80">
+                    {/* Top gradient line */}
+                    <div 
+                      className={`absolute top-0 left-0 right-0 h-px bg-gradient-to-r ${service.gradient} opacity-50 group-hover:opacity-100 transition-opacity duration-300`}
+                    />
+                    
+                    {/* Corner accent */}
+                    <div 
+                      className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${service.gradient} opacity-5 group-hover:opacity-10 blur-2xl transition-opacity duration-500`}
+                    />
 
-            <CardContent className="p-8 flex flex-col gap-4 flex-grow">
-              
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                transition={{ duration: 0.3 }}
-                className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.gradient} flex items-center justify-center`}
-              >
-                <Icon className="w-8 h-8 text-primary" />
-              </motion.div>
+                    {/* Content */}
+                    <div className="relative space-y-4">
+                      {/* Icon */}
+                      <motion.div
+                        whileHover={{ scale: 1.05, rotate: 5 }}
+                        transition={{ duration: 0.3 }}
+                        className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.gradient} p-[1px]`}
+                      >
+                        <div className="w-full h-full rounded-xl bg-slate-900 flex items-center justify-center">
+                          <Icon className={`w-7 h-7 bg-gradient-to-br ${service.gradient} bg-clip-text`} style={{ color: 'transparent', fill: 'none', stroke: 'url(#gradient)' }} />
+                          <Icon className={`w-7 h-7 absolute text-transparent bg-clip-text bg-gradient-to-br ${service.gradient}`} />
+                        </div>
+                      </motion.div>
+                      
+                      {/* Fix icon color */}
+                      <motion.div
+                        whileHover={{ scale: 1.05, rotate: 5 }}
+                        transition={{ duration: 0.3 }}
+                        className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.gradient} p-[1px] -mt-[72px]`}
+                      >
+                        <div className="w-full h-full rounded-xl bg-slate-900/90 flex items-center justify-center">
+                          <Icon className="w-7 h-7 text-white" />
+                        </div>
+                      </motion.div>
 
-              <h3 className="text-2xl font-bold">{service.title}</h3>
+                      {/* Title with arrow */}
+                      <div className="flex items-center justify-between pt-2">
+                        <h3 className="text-xl font-semibold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-slate-300 transition-all duration-300">
+                          {service.title}
+                        </h3>
+                        <motion.div
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : -10 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <ArrowUpRight className="w-5 h-5 text-slate-400" />
+                        </motion.div>
+                      </div>
 
-              <p className="text-muted-foreground leading-relaxed flex-grow">
-                {service.description}
-              </p>
+                      {/* Description */}
+                      <p className="text-slate-400 text-sm leading-relaxed">
+                        {service.description}
+                      </p>
 
-            </CardContent>
-          </Card>
-        </motion.div>
-      </Link>
-    );
-  })}
-</div>
+                      {/* Bottom link indicator */}
+                      <div className="pt-2">
+                        <span className={`text-sm font-medium text-transparent bg-clip-text bg-gradient-to-r ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}>
+                          Learn more →
+                        </span>
+                      </div>
+                    </div>
 
+                    {/* Bottom accent line */}
+                    <div 
+                      className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r ${service.gradient} opacity-0 group-hover:opacity-50 transition-opacity duration-500`}
+                    />
+                  </div>
+                </motion.div>
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

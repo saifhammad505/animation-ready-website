@@ -1,334 +1,209 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { motion } from "framer-motion";
-import {
-  BarChart3,
-  Database,
-  Server,
-  Cloud,
-  Brain,
-  Code2,
-  GitBranch,
-  Workflow,
-  Network,
-  PhoneCall,
-  Package,
-} from "lucide-react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight, BarChart3, Database, Workflow, Brain } from "lucide-react";
 
-const tools = [
-  // BI & Visualization
+const categories = [
   {
-    name: "Power BI",
-    category: "BI & Visualization",
-    description:
-      "Leading BI platform for interactive dashboards, data modeling, and enterprise reporting.",
+    name: "Data Visualization",
     icon: BarChart3,
+    gradient: "from-cyan-500 to-blue-600",
+    tools: ["Power BI", "Tableau", "Looker Studio", "Excel", "Seaborn", "Matplotlib","React-Vis", "D3.js"],
   },
   {
-    name: "Tableau",
-    category: "BI & Visualization",
-    description:
-      "Visual analytics platform for advanced dashboards and data storytelling.",
-    icon: BarChart3,
-  },
-  {
-    name: "Google Data Studio / Looker Studio",
-    category: "BI & Visualization",
-    description:
-      "User-friendly dashboarding tool for accessible, shareable business insights.",
-    icon: BarChart3,
-  },
-  {
-    name: "Microsoft Excel",
-    category: "BI & Visualization",
-    description:
-      "Essential spreadsheet tool for data analysis, modeling, and business reporting.",
-    icon: BarChart3,
-  },
-  {
-    name: "Reporting Hub",
-    category: "BI & Visualization",
-    description:
-      "Centralized reporting layer providing unified access to dashboards and KPIs.",
-    icon: BarChart3,
-  },
-
-  // Databases & Warehouses
-  {
-    name: "SQL Server",
-    category: "Databases & Warehousing",
-    description:
-      "Robust relational database for secure data storage and analytics workloads.",
+    name: "Databases & Warehousing",
     icon: Database,
+    gradient: "from-emerald-500 to-teal-600",
+    tools: [
+      "SQL Server", "MySQL", "PostgreSQL", "Azure SQL", "BigQuery",
+      "Redshift", "Snowflake",  "MS Fabric",
+    ],
   },
   {
-    name: "MySQL",
-    category: "Databases & Warehousing",
-    description:
-      "Open-source RDMS for scalable and reliable structured data storage.",
-    icon: Database,
-  },
-  {
-    name: "PostgreSQL",
-    category: "Databases & Warehousing",
-    description:
-      "Advanced open-source SQL database known for power, reliability, and extensibility.",
-    icon: Database,
-  },
-  {
-    name: "SQL Azure",
-    category: "Databases & Warehousing",
-    description:
-      "Cloud-based SQL database optimized for performance, scale, and security.",
-    icon: Cloud,
-  },
-  {
-    name: "Amazon Redshift",
-    category: "Databases & Warehousing",
-    description:
-      "Fully managed cloud data warehouse for fast querying and scalable analytics.",
-    icon: Server,
-  },
-  {
-    name: "Google BigQuery",
-    category: "Databases & Warehousing",
-    description:
-      "Serverless, high-performance data warehouse for large-scale SQL analytics.",
-    icon: Server,
-  },
-  {
-    name: "Snowflake",
-    category: "Databases & Warehousing",
-    description:
-      "Modern cloud data warehouse with elastic compute and secure data sharing.",
-    icon: Server,
-  },
-  {
-    name: "Apache Hive",
-    category: "Databases & Warehousing",
-    description:
-      "Distributed warehouse system designed for querying and analyzing big data.",
-    icon: Database,
-  },
-  {
-    name: "MS Fabric",
-    category: "Databases & Warehousing",
-    description:
-      "End-to-end analytics platform unifying data engineering, warehousing, and BI.",
-    icon: Cloud,
-  },
-  {
-    name: "Azure Synapse",
-    category: "Databases & Warehousing",
-    description:
-      "Unified analytics service combining big data and data warehousing capabilities.",
-    icon: Cloud,
-  },
-  {
-    name: "MongoDB",
-    category: "Databases & Warehousing",
-    description:
-      "Document-oriented NoSQL database for flexible, schema-less data storage.",
-    icon: Database,
-  },
-
-  // Data Engineering & Pipelines
-  {
-    name: "Azure Data Factory",
-    category: "Data Engineering & Pipelines",
-    description:
-      "Cloud ETL/ELT service for orchestrating and managing data pipelines.",
+    name: "Data Engineering & Pipelines",
     icon: Workflow,
+    gradient: "from-orange-500 to-rose-600",
+    tools: [
+      "Azure Data Factory", "Apache Spark", "dbt", "Apache Airflow",
+      "Power Automate", "REST APIs",
+    ],
   },
   {
-    name: "Apache Spark",
-    category: "Data Engineering & Pipelines",
-    description:
-      "Distributed processing engine for large-scale data transformation and analytics.",
-    icon: Workflow,
-  },
-  {
-    name: "dbt",
-    category: "Data Engineering & Pipelines",
-    description:
-      "Analytics engineering framework for versioned, testable SQL transformations.",
-    icon: Code2,
-  },
-  {
-    name: "Airflow",
-    category: "Data Engineering & Pipelines",
-    description:
-      "Workflow orchestration platform for complex, scheduled data processes.",
-    icon: Workflow,
-  },
-  {
-    name: "3CX Call Logs & Telephony Data",
-    category: "Data Engineering & Pipelines",
-    description:
-      "Integration of telephony data for call analytics, SLA tracking, and reporting.",
-    icon: PhoneCall,
-  },
-  {
-    name: "REST APIs",
-    category: "Data Engineering & Pipelines",
-    description:
-      "API-based integrations to connect line-of-business systems and data sources.",
-    icon: Network,
-  },
-
-  // Programming, Analytics & ML
-  {
-    name: "Python",
-    category: "Programming & Analytics",
-    description:
-      "Core language for analytics, automation, data engineering, and ML pipelines.",
-    icon: Code2,
-  },
-  {
-    name: "R",
-    category: "Programming & Analytics",
-    description:
-      "Statistical computing language used for advanced analytics and modeling.",
-    icon: Code2,
-  },
-  {
-    name: "Pandas",
-    category: "Programming & Analytics",
-    description:
-      "Python library for powerful data manipulation, cleaning, and analysis.",
-    icon: Code2,
-  },
-  {
-    name: "NumPy",
-    category: "Programming & Analytics",
-    description:
-      "Fundamental package for scientific computing and numerical operations in Python.",
-    icon: Code2,
-  },
-
-  // ML & AI
-  {
-    name: "Scikit-Learn",
-    category: "Machine Learning & AI",
-    description:
-      "ML library for classical models: regression, classification, clustering, and more.",
+    name: "Machine Learning & AI",
     icon: Brain,
-  },
-  {
-    name: "TensorFlow",
-    category: "Machine Learning & AI",
-    description:
-      "Deep learning framework for building and deploying production-ready models.",
-    icon: Brain,
-  },
-  {
-    name: "PyTorch",
-    category: "Machine Learning & AI",
-    description:
-      "Flexible deep learning framework for research-grade and production models.",
-    icon: Brain,
-  },
-  {
-    name: "Keras",
-    category: "Machine Learning & AI",
-    description:
-      "High-level neural network API for rapid experimentation and model building.",
-    icon: Brain,
-  },
-  {
-    name: "Azure ML",
-    category: "Machine Learning & AI",
-    description:
-      "Cloud platform for building, training, and deploying machine learning solutions.",
-    icon: Brain,
-  },
-
-  // Automation, DevOps & Collaboration
-  {
-    name: "Power Automate",
-    category: "Automation & DevOps",
-    description:
-      "Workflow automation across apps, data, and approvals for business processes.",
-    icon: Workflow,
-  },
-  {
-    name: "Docker",
-    category: "Automation & DevOps",
-    description:
-      "Containerization platform for consistent deployment of apps and services.",
-    icon: Package,
-  },
-  {
-    name: "Git / GitHub",
-    category: "Automation & DevOps",
-    description:
-      "Version control and collaboration tooling for analytics, code, and automation.",
-    icon: GitBranch,
+    gradient: "from-violet-500 to-purple-600",
+    tools: [
+      "Pandas", "Azure ML", "Scikit-Learn",
+      "TensorFlow", "PyTorch", "Keras","FastAPI"    ],
   },
 ];
 
-const Tools = () => {
+const ToolsShowcase = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % categories.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  const prev = () => setActiveIndex((prev) => (prev - 1 + categories.length) % categories.length);
+  const next = () => setActiveIndex((prev) => (prev + 1) % categories.length);
+
+  const current = categories[activeIndex];
+  const Icon = current.icon;
+
   return (
-    <section
-      id="tools"
-      className="py-24 bg-slate-950 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950"
-    >
-      <div className="container mx-auto px-6">
+    <section className="relative py-24 overflow-hidden bg-slate-950">
+      {/* Background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-violet-500/5 rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_rgb(2,6,23)_70%)]" />
+      </div>
+
+      <div className="container relative mx-auto px-6">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16 space-y-4"
+          viewport={{ once: true }}
+          className="text-center mb-16"
         >
-          <p className="text-sm font-semibold tracking-[0.25em] text-primary/70 uppercase">
-            Powered by Industry-Leading Tools
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-white">
-            The Stack Behind Our BI, Analytics & Automation Solutions
+          <span className="inline-block px-4 py-1.5 mb-4 text-xs font-semibold tracking-[0.2em] uppercase text-cyan-400 bg-cyan-500/10 rounded-full border border-cyan-500/20">
+            Technology Stack
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 tracking-tight">
+            The Tools Powering
+            <span className="block bg-gradient-to-r from-cyan-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent">
+              Our Solutions
+            </span>
           </h2>
-          <p className="text-lg text-slate-300 max-w-3xl mx-auto">
-            We design and deliver solutions on top of modern, battle-tested
-            technologies, integrating seamlessly with the tools your
-            organization already trusts.
+          <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            Modern, scalable, enterprise-grade platforms behind our data engineering,
+            analytics and automation solutions.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {tools.map((tool, index) => {
-            const Icon = tool.icon;
+        {/* Category tabs */}
+        <div className="flex justify-center gap-2 mb-12 flex-wrap">
+          {categories.map((cat, idx) => {
+            const CatIcon = cat.icon;
             return (
-              <motion.div
-                key={tool.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.02, duration: 0.4 }}
+              <button
+                key={cat.name}
+                onClick={() => setActiveIndex(idx)}
+                className={`group flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                  idx === activeIndex
+                    ? "bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/25"
+                    : "bg-slate-800/50 text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                }`}
               >
-                <Card className="h-full border border-slate-700/70 bg-slate-900/60 hover:bg-slate-900 hover:border-primary/60 transition-all duration-300 rounded-2xl">
-                  <CardContent className="p-6 flex flex-col gap-3">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                        <Icon className="w-5 h-5 text-primary" />
-                      </div>
-                      <div className="text-xs font-medium uppercase tracking-wide text-primary/70">
-                        {tool.category}
-                      </div>
-                    </div>
-                    <h3 className="text-base font-semibold text-white">
-                      {tool.name}
-                    </h3>
-                    <p className="text-sm text-slate-300 leading-relaxed">
-                      {tool.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              </motion.div>
+                <CatIcon className="w-4 h-4" />
+                <span className="hidden sm:inline">{cat.name}</span>
+              </button>
             );
           })}
+        </div>
+
+        {/* Main showcase card */}
+        <div
+          className="relative max-w-5xl mx-auto"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Navigation arrows */}
+          <button
+            onClick={prev}
+            className="absolute left-0 md:-left-16 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-slate-800/80 backdrop-blur-sm border border-slate-700 flex items-center justify-center text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 transition-all duration-300 hover:scale-110"
+          >
+            <ChevronLeft size={24} />
+          </button>
+          <button
+            onClick={next}
+            className="absolute right-0 md:-right-16 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-slate-800/80 backdrop-blur-sm border border-slate-700 flex items-center justify-center text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 transition-all duration-300 hover:scale-110"
+          >
+            <ChevronRight size={24} />
+          </button>
+
+          {/* Animated card */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeIndex}
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -20 }}
+              transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+              className="relative"
+            >
+              {/* Glow effect */}
+              <div className={`absolute -inset-1 bg-gradient-to-r ${current.gradient} rounded-3xl blur-xl opacity-20`} />
+              
+              {/* Card */}
+              <div className="relative p-8 md:p-12 bg-gradient-to-br from-slate-900/90 to-slate-900/50 rounded-3xl border border-slate-700/50 backdrop-blur-xl shadow-2xl">
+                {/* Category header */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
+                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${current.gradient} flex items-center justify-center shadow-lg`}>
+                    <Icon className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-3xl md:text-4xl font-bold text-white text-center sm:text-left">
+                    {current.name}
+                  </h3>
+                </div>
+
+                {/* Tools grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                  {current.tools.map((tool, toolIndex) => (
+                    <motion.div
+                      key={tool}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: toolIndex * 0.05, duration: 0.3 }}
+                      className="group relative"
+                    >
+                      <div className="relative px-4 py-3 bg-slate-800/50 rounded-xl border border-slate-700/50 hover:border-cyan-500/50 transition-all duration-300 hover:bg-slate-800/80 cursor-default">
+                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/5 to-cyan-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+                        <span className="relative text-sm font-medium text-slate-300 group-hover:text-white transition-colors duration-300 block text-center">
+                          {tool}
+                        </span>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Progress indicators */}
+                <div className="flex justify-center gap-2 mt-10">
+                  {categories.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setActiveIndex(idx)}
+                      className="relative w-12 h-1 rounded-full overflow-hidden bg-slate-700"
+                    >
+                      {idx === activeIndex && (
+                        <motion.div
+                          className={`absolute inset-0 bg-gradient-to-r ${categories[idx].gradient}`}
+                          initial={{ scaleX: 0 }}
+                          animate={{ scaleX: 1 }}
+                          transition={{ duration: isPaused ? 0 : 5, ease: "linear" }}
+                          style={{ originX: 0 }}
+                        />
+                      )}
+                      {idx < activeIndex && (
+                        <div className={`absolute inset-0 bg-gradient-to-r ${categories[idx].gradient}`} />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </section>
   );
 };
 
-export default Tools;
+export default ToolsShowcase;

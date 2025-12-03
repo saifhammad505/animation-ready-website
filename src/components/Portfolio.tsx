@@ -23,7 +23,7 @@ const projects = [
     impact: "Real-time KPI visibility for operational and leadership teams",
     features: [
       "End-to-end operational KPI monitoring",
-      "Real-time fill rate, conversion & TAT tracking",
+      "Real-time TAT, cancellations & Sales tracking",
       "Segmentation by region, team & customer",
       "Automated performance insights",
     ],
@@ -35,14 +35,14 @@ const projects = [
   domain: "Customer Support Analytics",
   title: "Automated 3CX Reporting & Support Performance Dashboard",
   summary:
-    "An automated analytics solution that ingests 3CX call logs from CSV files into SQL Server and visualizes customer support performance through a comprehensive Power BI dashboard.",
+    "An automated analytics solution that ingests 3CX call logs from CSV files / CDR  into SQL Server and visualizes customer support performance through a comprehensive Power BI dashboard.",
   outcome: "100% automation of reporting workflows",
-  impact: "Real-time visibility into call quality, agent productivity, and support performance",
+  impact: "Real-time visibility into call stats, agent productivity, and support performance",
   features: [
     "CSV-to-SQL automated ingestion pipeline",
     "Daily 3CX call log integration",
     "Inbound & outbound performance insights",
-    "Call quality scores & target tracking",
+    "Call stats & target tracking",
     "Gap-time analysis & productivity trends",
   ],
   image: support3cxImg, // import this image
@@ -59,7 +59,7 @@ const projects = [
     impact: "Improved leadership decision-making visibility",
     features: [
       "KPI scoring engine tied to targets",
-      "Competency & behaviour evaluation",
+      "Trend analysis by department & staff",
       "Attendance & punctuality intelligence",
       "Commission calculation automation",
     ],

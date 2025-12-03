@@ -128,7 +128,7 @@ const DataAnalytics = () => {
         transition={{ duration: 0.7 }}
       >
         <h1 className="text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-6">
-          Data Analytics{" "}
+          Business Analytics{" "}
           <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
             (Descriptive + Diagnostic)
           </span>
